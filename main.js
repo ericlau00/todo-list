@@ -4,10 +4,21 @@ window.onload = () => {
     $('submit-todo').addEventListener('click', (e) => {
         e.preventDefault();
 
-        let content = $('todo-to-add').value.trim();
+        let todo_input = $('add-todo-input');
+
+        let content = todo_input.value.trim();
         if (content.length > 0) {
-            console.log(content);
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 201) {
+                    let todo = JSON.parse(this.responseText);
+                    console.log(todo);
+                }
+            }
+            xhttp.open('POST', 'add_todo.php', true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(`todo=${encodeURIComponent(content)}`);
         }
-        $('todo-to-add').value = '';
+        todo_input.value = '';
     });
 }
