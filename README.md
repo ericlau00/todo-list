@@ -4,7 +4,29 @@ A basic todo list app written with HTML5, CSS3, SQLite 3, and PHP 7.
 
 ## Instructions
 
-Run the following command in your terminal:
+### Install
+
+Clone this repository.
+
+```shell
+git clone https://github.com/ericlau00/todo-list.git
+```
+
+Install PHP 7.2.
+
+```shell
+sudo apt-get install php7.2
+```
+
+Install the SQLite 3 PHP dependency.
+
+```shell
+sudo apt-get install php7.2-sqlite3
+```
+
+### Launch
+
+Start a local server.
 
 ```shell
 php -S localhost:4000
