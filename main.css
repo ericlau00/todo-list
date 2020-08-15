@@ -9,7 +9,7 @@ body {
     padding: 0;
 }
 
-.container, .list-items {
+.container, #list-items {
     display: grid;
     place-items: center;
 }
@@ -77,11 +77,7 @@ label, .delete {
     color: gray;
 }
 
-.edit {
-    color: blue;
-}
-
-.edit:hover, .delete:hover, #submit-todo:hover, input[type='checkbox']:hover {
+.delete:hover, #submit-todo:hover, input[type='checkbox']:hover {
     cursor: pointer;
 }
 
