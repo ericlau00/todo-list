@@ -58,6 +58,20 @@ input[type='checkbox'] {
     height: 1.5rem;
 }
 
+#todo-to-add {
+    width: 100%;
+}
+
+#submit-todo {
+    margin-left: auto;
+    width: min-content;
+}
+
+#add-todo {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
 .delete {
     font-size: 1.25rem;
     color: red;

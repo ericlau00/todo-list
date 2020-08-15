@@ -11,21 +11,22 @@
     </head>
 
     <body>
-        <!-- <form method="POST" action="test.php">
-            <input id="submit-input" type="submit" value="Submit">
-        </form> -->
         <div class="container">
             <div class="list">
                 <header>todo-list</header>
+                <form id="add-todo" method="POST" action="add_todo.php">
+                    <input type="text" id="todo-to-add" required>
+                    <input id="submit-todo" type="submit" value="Add todo">
+                </form>
                 <div class="list-items">
                     <div class="list-item">
                         <input type="checkbox" name="item-0">
                         <div class="item-content">
                             <label for="item-0">
-                                create the todo-list
+                                create the todo-list input
                             </label>
                             <div>
-                                <small>2020-08-15</small>
+                                <small>Created on 2020-08-15</small>
                                 <small class='edit'>edit</small>
                             </div>
                         </div>
