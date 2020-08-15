@@ -16,7 +16,7 @@
 
         $stmt->bindValue(':todo', $_POST['todo'], SQLITE3_TEXT);
 
-        $date_str = date_create("now")->format('Y-m-d\TH:i:s');
+        $date_str = date_create("now")->format('Y-m-d');
         $stmt->bindValue(':date', $date_str, SQLITE3_TEXT);
 
         $stmt->execute();

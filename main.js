@@ -28,7 +28,7 @@ let createDateDiv = (date) => {
     let smallContainer = create('div');
 
     let todoDate = create('small');
-    todoDate.textContent = `Created on ${date}`; // TODO: format the date better
+    todoDate.textContent = `Created on ${date}`;
 
     smallContainer.appendChild(todoDate);
 

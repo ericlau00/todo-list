@@ -1,6 +1,6 @@
 # todo-list
 
-A basic todo list app written with HTML5, CSS3, SQLite 3, and PHP 7.
+A basic todo list app written in HTML5, CSS3, JavaScript, SQLite 3, and PHP 7.
 
 ## Instructions
 
