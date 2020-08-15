@@ -20,12 +20,16 @@
         $stmt->bindValue(':date', $date_str, SQLITE3_TEXT);
 
         $stmt->execute();
+
+        $item_id = $db->lastInsertRowID();
+
         $db->close();
 
         http_response_code(201);
 
         $arr = array(
-            "item" => $_POST['todo'],
+            "item_id" => $item_id,
+            "label" => $_POST['todo'],
             "date" => $date_str
         );
 
