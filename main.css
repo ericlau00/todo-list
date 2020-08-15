@@ -9,48 +9,47 @@ body {
     padding: 0;
 }
 
-.container {
-    padding-top: 5rem;
+.container, .list-items {
     display: grid;
     place-items: center;
-    width: 100vw;
+}
+
+.container {
+    padding-top: 4rem;
+    width: 100%;
 }
 
 .list {
-    width: 50vw;
+    width: 50%;
 }
 
-header {
-    font-weight: bold;
+h1 {
     font-size: 2rem;
-    padding-bottom: 1rem;
 }
 
-.list-items {
-    display: grid;
-    place-items: center;
+.list-item, #add-todo-form {
+    margin-bottom: 1rem;
 }
 
 .list-item {
     box-sizing: border-box;
     padding: 1.25rem;
-    margin-bottom: 1rem;
     background-color: rgb(245, 245, 245);
     border-radius: 10px;
     box-shadow: 0 5px 5px -5px black;
     justify-self: left;
-    min-width: 100%;
 
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.item-content {
-    word-wrap: break-word;
-    padding-left: 1.5rem;
-    padding-right: 2rem;
+.list-item, .item-content, #add-todo-input {
     width: 100%;
+}
+
+.item-content {
+    padding: 0 2rem 0 1.5rem;
 }
 
 input[type='checkbox'] {
@@ -58,55 +57,36 @@ input[type='checkbox'] {
     height: 1.5rem;
 }
 
-input[type='checkbox']:hover {
-    cursor: pointer;
-}
-
-#todo-to-add {
-    width: 100%;
+#add-todo-form {
+    display: flex;
 }
 
 #submit-todo {
     margin-left: auto;
-    width: min-content;
 }
 
-#submit-todo:hover {
-    cursor: pointer;
-}
-
-#add-todo {
-    display: flex;
-    margin-bottom: 1rem;
+label, .delete {
+    font-size: 1.25rem;
 }
 
 .delete {
-    font-size: 1.25rem;
     color: red;
 }
 
 .delete:hover {
-    cursor: pointer;
     color: gray;
-}
-
-label {
-    word-wrap: break-word;
-    width: 100%;
-    font-size: 1.25rem;
 }
 
 .edit {
     color: blue;
-    text-decoration: underline;
 }
 
-.edit:hover {
+.edit:hover, .delete:hover, #submit-todo:hover, input[type='checkbox']:hover {
     cursor: pointer;
 }
 
 @media (max-width : 1000px) {
     .list {
-        width: 85vw;
+        width: 85%;
     }
 }

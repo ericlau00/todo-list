@@ -13,9 +13,9 @@
     <body>
         <div class="container">
             <div class="list">
-                <header>todo-list</header>
-                <form id="add-todo" method="POST" action="add_todo.php">
-                    <input type="text" id="todo-to-add" required>
+                <h1>todo-list</h1>
+                <form id="add-todo-form" method="POST" action="add_todo.php">
+                    <input type="text" id="add-todo-input">
                     <input id="submit-todo" type="submit" value="Add todo">
                 </form>
                 <div class="list-items">
@@ -27,7 +27,7 @@
                             </label>
                             <div>
                                 <small>Created on 2020-08-15</small>
-                                <small class='edit'>edit</small>
+                                <small class='edit'><u>edit</u></small>
                             </div>
                         </div>
                         <div class="delete">Delete</div>
