@@ -29,7 +29,7 @@ window.onload = () => {
             });
     }
 
-    request('GET', 'get_todos.php', null, getTodos);
+    request('GET', 'php/get_todos.php', null, getTodos);
 
     $('submit-todo').addEventListener('click', (e) => {
         e.preventDefault();
@@ -48,7 +48,7 @@ let addTodo = (container) => {
         }
 
         let body = `todo=${encodeURIComponent(content)}`;
-        request('POST', 'add_todo.php', body, addFunction);
+        request('POST', 'php/add_todo.php', body, addFunction);
     }
     todo_input.value = '';
 }
@@ -86,7 +86,7 @@ let createCheckDiv = (item_id, is_complete) => {
         }
 
         let body = encodeURI(`item_id=${item_id}&is_complete=${!is_complete}`);
-        request('POST', 'edit_todo.php', body, editFunction);
+        request('POST', 'php/edit_todo.php', body, editFunction);
     });
 
     return todoCheck;
@@ -109,8 +109,7 @@ let createContentDiv = (label, date, is_complete) => {
 
     let todoLabel = create('label');
     todoLabel.textContent = label;
-    if (is_complete)
-        todoLabel.style.textDecoration = 'line-through';
+    if (is_complete) todoLabel.style.textDecoration = 'line-through';
 
     let dateDiv = createDateDiv(date);
 
@@ -134,7 +133,7 @@ let createDeleteDiv = (item_id) => {
 
         let body = `item_id=${encodeURIComponent(item_id)}`;
 
-        request('POST', 'delete_todo.php', body, deleteFunction);
+        request('POST', 'php/delete_todo.php', body, deleteFunction);
     });
 
     return todoDelete;
