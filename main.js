@@ -5,9 +5,9 @@ let create = (element_type) => document.createElement(element_type);
 let appendTodoItem = (container, todo) => {
     let { 'id': item_id, label, date, is_complete } = todo;
 
-    is_complete = (is_complete == 'complete') ? true : false;
+    is_complete = (is_complete == 'true') ? true : false;
 
-    let todoItem = createTodoItem(item_id, label, date, false);
+    let todoItem = createTodoItem(item_id, label, date, is_complete);
     container.appendChild(todoItem);
 }
 
@@ -75,16 +75,19 @@ let createCheckDiv = (item_id, is_complete) => {
 
     todoCheck.addEventListener('change', () => {
         let item = $(`item-${item_id}`);
-        let label_el = item.querySelector('div.item-content > label');
+        let el = item.querySelector('div.item-content > label');
 
-        let cur_state = label_el.style.textDecoration;
-        if (cur_state == 'none' || cur_state.length == 0) {
-            label_el.style.textDecoration = 'line-through';
-            // set item to be complete in database
-        } else if (cur_state == 'line-through') {
-            label_el.style.textDecoration = 'none';
-            // set item to be incomplete in database;
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 204) {
+                el.style.textDecoration = (is_complete) ? 'none' : 'line-through';
+                is_complete = !is_complete;
+            }
         }
+        xhttp.open('POST', 'edit_todo.php', true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        let uri = encodeURI(`item_id=${item_id}&is_complete=${!is_complete}`);
+        xhttp.send(uri);
     });
 
     return todoCheck;

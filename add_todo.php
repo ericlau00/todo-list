@@ -6,7 +6,7 @@ if ($method == 'GET') {
 } else if ($method == 'POST') {
     require_once('db_connect.php');
 
-    $stmt = $db->prepare("INSERT INTO todo_list (label, date, is_complete) VALUES (:label, :date, 'incomplete')");
+    $stmt = $db->prepare("INSERT INTO todo_list (label, date, is_complete) VALUES (:label, :date, 'false')");
 
     $stmt->bindValue(':label', $_POST['todo'], SQLITE3_TEXT);
 
@@ -25,7 +25,7 @@ if ($method == 'GET') {
         "item_id" => $item_id,
         "label" => $_POST['todo'],
         "date" => $date_str,
-        "is_complete" => 'incomplete'
+        "is_complete" => 'false'
     );
 
     echo json_encode($arr);
