@@ -11,22 +11,25 @@ let appendTodoItem = (container, todo) => {
     container.appendChild(todoItem);
 }
 
+let request = (method, script, body, stateFunction) => {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = stateFunction;
+    xhttp.open(method, script, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(body);
+}
+
 window.onload = () => {
     let container = $('list-items');
 
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            let todos = JSON.parse(this.responseText);
-
-            todos.forEach(todo => {
+    let getTodos = function () {
+        if (this.readyState == 4 && this.status == 200)
+            JSON.parse(this.responseText).forEach(todo => {
                 appendTodoItem(container, todo);
-            })
-        }
+            });
     }
-    xhttp.open('GET', 'get_todos.php', true);
-    xhttp.send();
 
+    request('GET', 'get_todos.php', null, getTodos);
 
     $('submit-todo').addEventListener('click', (e) => {
         e.preventDefault();
@@ -39,15 +42,13 @@ let addTodo = (container) => {
 
     let content = todo_input.value.trim();
     if (content.length > 0) {
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 201) {
+        let addFunction = function () {
+            if (this.readyState == 4 && this.status == 201)
                 appendTodoItem(container, JSON.parse(this.responseText));
-            }
         }
-        xhttp.open('POST', 'add_todo.php', true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send(`todo=${encodeURIComponent(content)}`);
+
+        let body = `todo=${encodeURIComponent(content)}`;
+        request('POST', 'add_todo.php', body, addFunction);
     }
     todo_input.value = '';
 }
@@ -77,17 +78,15 @@ let createCheckDiv = (item_id, is_complete) => {
         let item = $(`item-${item_id}`);
         let el = item.querySelector('div.item-content > label');
 
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 204) {
+        let editFunction = function () {
+            if (this.readyState == 4 && this.status == 204) {
                 el.style.textDecoration = (is_complete) ? 'none' : 'line-through';
                 is_complete = !is_complete;
             }
         }
-        xhttp.open('POST', 'edit_todo.php', true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        let uri = encodeURI(`item_id=${item_id}&is_complete=${!is_complete}`);
-        xhttp.send(uri);
+
+        let body = encodeURI(`item_id=${item_id}&is_complete=${!is_complete}`);
+        request('POST', 'edit_todo.php', body, editFunction);
     });
 
     return todoCheck;
@@ -110,9 +109,8 @@ let createContentDiv = (label, date, is_complete) => {
 
     let todoLabel = create('label');
     todoLabel.textContent = label;
-    if (is_complete) {
+    if (is_complete)
         todoLabel.style.textDecoration = 'line-through';
-    }
 
     let dateDiv = createDateDiv(date);
 
@@ -128,17 +126,15 @@ let createDeleteDiv = (item_id) => {
     todoDelete.textContent = 'Delete';
 
     todoDelete.addEventListener('click', () => {
-        let xhttp = new XMLHttpRequest();
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 204) {
+        let deleteFunction = function () {
+            if (this.readyState == 4 && this.status == 204)
                 $(`item-${item_id}`).remove();
-            }
-        };
+        }
 
-        xhttp.open('POST', 'delete_todo.php', true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send(`item_id=${encodeURIComponent(item_id)}`);
+        let body = `item_id=${encodeURIComponent(item_id)}`;
+
+        request('POST', 'delete_todo.php', body, deleteFunction);
     });
 
     return todoDelete;
