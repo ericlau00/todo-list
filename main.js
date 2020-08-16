@@ -3,7 +3,7 @@ let $ = (id) => document.getElementById(id);
 let create = (element_type) => document.createElement(element_type);
 
 let appendTodoItem = (container, todo) => {
-    let { item_id, label, date, is_complete } = todo;
+    let { 'id': item_id, label, date, is_complete } = todo;
 
     is_complete = (is_complete == 'complete') ? true : false;
 
@@ -15,7 +15,7 @@ window.onload = () => {
     let container = $('list-items');
 
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let todos = JSON.parse(this.responseText);
 
@@ -125,10 +125,17 @@ let createDeleteDiv = (item_id) => {
     todoDelete.textContent = 'Delete';
 
     todoDelete.addEventListener('click', () => {
-        // remove item from the database
+        let xhttp = new XMLHttpRequest();
 
-        let item = $(`item-${item_id}`);
-        item.remove();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 204) {
+                $(`item-${item_id}`).remove();
+            }
+        };
+
+        xhttp.open('POST', 'delete_todo.php', true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(`item_id=${encodeURIComponent(item_id)}`);
     });
 
     return todoDelete;

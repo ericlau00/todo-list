@@ -6,10 +6,6 @@ if ($method == 'GET') {
 } else if ($method == 'POST') {
     require_once('db_connect.php');
 
-    if(!$bool) {
-        exit;
-    }
-
     $stmt = $db->prepare("INSERT INTO todo_list (label, date, is_complete) VALUES (:label, :date, 'incomplete')");
 
     $stmt->bindValue(':label', $_POST['todo'], SQLITE3_TEXT);
