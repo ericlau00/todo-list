@@ -2,15 +2,6 @@ let $ = (id) => document.getElementById(id);
 
 let create = (element_type) => document.createElement(element_type);
 
-let appendTodoItem = (container, todo) => {
-    let { 'id': item_id, label, date, is_complete } = todo;
-
-    is_complete = (is_complete == 'true') ? true : false;
-
-    let todoItem = createTodoItem(item_id, label, date, is_complete);
-    container.appendChild(todoItem);
-}
-
 let request = (method, script, body, stateFunction) => {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = stateFunction;
@@ -25,7 +16,7 @@ window.onload = () => {
     let getTodos = function () {
         if (this.readyState == 4 && this.status == 200)
             JSON.parse(this.responseText).forEach(todo => {
-                appendTodoItem(container, todo);
+                container.appendChild(createTodoItem(todo));
             });
     }
 
@@ -39,7 +30,7 @@ window.onload = () => {
 
     let sort = $('sort');
     sort.addEventListener('change', () => {
-        while(container.firstChild)
+        while (container.firstChild)
             container.removeChild(container.lastChild);
         let uri = encodeURI(`?sort_by=${sort.value}`);
         request('GET', `php/get_todos.php${uri}`, null, getTodos);
@@ -52,8 +43,15 @@ let addTodo = (container) => {
     let content = todo_input.value.trim();
     if (content.length > 0) {
         let addFunction = function () {
-            if (this.readyState == 4 && this.status == 201)
-                appendTodoItem(container, JSON.parse(this.responseText));
+            if (this.readyState == 4 && this.status == 201) {
+                let todoItem = createTodoItem(JSON.parse(this.responseText));
+                let sort = $('sort').value;
+                if (sort == 'id.DESC' || sort == 'is_complete.ASC') {
+                    container.prepend(todoItem);
+                } else {
+                    container.appendChild(todoItem);
+                }
+            }
         }
 
         let body = `todo=${encodeURIComponent(content)}`;
@@ -62,7 +60,11 @@ let addTodo = (container) => {
     todo_input.value = '';
 }
 
-let createTodoItem = (item_id, label, date, is_complete) => {
+let createTodoItem = (todo) => {
+    let { 'id': item_id, label, date, is_complete } = todo;
+
+    is_complete = (is_complete == 'true') ? true : false;
+
     let todoItem = create('div');
     todoItem.className = 'list-item';
     todoItem.id = `item-${item_id}`;
