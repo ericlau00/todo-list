@@ -16,6 +16,12 @@
                 <h1>todo-list</h1>
                 <form id="add-todo-form" method="POST">
                     <input type="text" id="add-todo-input">
+                    <select id="sort" name="sort">
+                        <option value="id.ASC">Oldest first</option>
+                        <option value="id.DESC">Newest first</option>
+                        <option value="is_complete.ASC">Incomplete first</option>
+                        <option value="is_complete.DESC">Complete first</option>
+                    </select>
                     <input id="submit-todo" type="submit" value="Add todo">
                 </form>
                 <div id="list-items"></div>

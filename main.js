@@ -29,12 +29,21 @@ window.onload = () => {
             });
     }
 
-    request('GET', 'php/get_todos.php', null, getTodos);
+    let default_sort = encodeURI('?sort_by=id.ASC');
+    request('GET', `php/get_todos.php${default_sort}`, null, getTodos);
 
     $('submit-todo').addEventListener('click', (e) => {
         e.preventDefault();
         addTodo(container);
     });
+
+    let sort = $('sort');
+    sort.addEventListener('change', () => {
+        while(container.firstChild)
+            container.removeChild(container.lastChild);
+        let uri = encodeURI(`?sort_by=${sort.value}`);
+        request('GET', `php/get_todos.php${uri}`, null, getTodos);
+    })
 }
 
 let addTodo = (container) => {
